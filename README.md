@@ -1,3 +1,40 @@
+Tufte CSS (vjbe fork)
+=====================
+A fork of [edwardtufte/tufte-css](https://github.com/edwardtufte/tufte-css), shared by
+the vjbe.net projects so none of them keeps its own copy. Changes are marked `[vjbe]` in
+`tufte.css`:
+
+- **`box-sizing: border-box`** on everything (mobile gutters narrowed to match).
+- **Dark mode as variables** (`--tufte-bg`, `--tufte-ink`, `--tufte-muted`, `--tufte-rule`,
+  `--tufte-panel`, `--tufte-panel-edge`). It follows the system setting, and
+  `<html data-theme="light|dark">` overrides it.
+- **A light/dark toggle** pinned bottom-left (`theme.js`, adds its own button).
+- **Print as a first-class citizen**: always light, `@page` margins, no breaks after headings
+  or inside figures/tables, and `.no-print` / `.print-only` helper classes.
+
+### Using it in a project
+
+```bash
+git submodule add https://github.com/veazmanov/tufte-css.git <web-root>/tufte
+```
+
+```html
+<link rel="stylesheet" href="/tufte/tufte.css">
+<!-- optional toggle; data-key and data-cookie-domain are optional -->
+<script src="/tufte/theme.js" data-key="tufte-theme"></script>
+```
+
+See the top of `theme.js` for a `<head>` snippet that stops the wrong theme flashing on load.
+Put your own styles in a separate stylesheet loaded after `tufte.css`.
+
+### Pulling in upstream changes
+
+```bash
+git fetch upstream && git merge upstream/gh-pages
+```
+
+---
+
 Tufte CSS
 =========
 Edward Tufte uses a distinctive style in his handouts: simple, with well-set

@@ -39,9 +39,51 @@
     font-display: swap;
 }
 
+/* [vjbe] Border-box sizing everywhere, so padding and borders never push an element past its width */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* [vjbe] Colours as variables. Dark follows the system setting unless <html data-theme="light|dark"> is set
+   (theme.js does that); the dark values are repeated for the two cases. Override any of them in your own CSS. */
+:root {
+    color-scheme: light;
+    --tufte-bg: #fffff8;
+    --tufte-ink: #111;
+    --tufte-muted: #666;
+    --tufte-rule: #ccc;
+    --tufte-panel: #f3eedf;
+    --tufte-panel-edge: #ddd3b9;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        color-scheme: dark;
+        --tufte-bg: #151515;
+        --tufte-ink: #ddd;
+        --tufte-muted: #999;
+        --tufte-rule: #444;
+        --tufte-panel: #2a2a2a;
+        --tufte-panel-edge: #444;
+    }
+}
+
+:root[data-theme="dark"] {
+    color-scheme: dark;
+    --tufte-bg: #151515;
+    --tufte-ink: #ddd;
+    --tufte-muted: #999;
+    --tufte-rule: #444;
+    --tufte-panel: #2a2a2a;
+    --tufte-panel-edge: #444;
+}
+
 /* Tufte CSS styles */
 html {
     font-size: 15px;
+    background-color: var(--tufte-bg);
 }
 
 body {
@@ -50,18 +92,10 @@ body {
     margin-right: auto;
     padding-left: 12.5%;
     font-family: et-book, Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
-    background-color: #fffff8;
-    color: #111;
+    background-color: var(--tufte-bg);
+    color: var(--tufte-ink);
     max-width: 1400px;
     counter-reset: sidenote-counter;
-}
-
-/* Adds dark mode */
-@media (prefers-color-scheme: dark) {
-    body {
-        background-color: #151515;
-        color: #ddd;
-    }
 }
 
 h1 {
@@ -95,7 +129,7 @@ hr {
     height: 1px;
     width: 55%;
     border: 0;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid var(--tufte-rule);
     margin: 1em 0;
     padding: 0;
 }
@@ -383,8 +417,9 @@ label.margin-toggle:not(.sidenote-number) {
 @media (max-width: 760px) {
     body {
         width: 84%;
-        padding-left: 8%;
-        padding-right: 8%;
+        /* [vjbe] narrower gutters, as on lib.vjbe.net (border-box puts the padding inside the width) */
+        padding-left: 1%;
+        padding-right: 1%;
     }
 
     hr,
@@ -456,5 +491,126 @@ label.margin-toggle:not(.sidenote-number) {
 
     img {
         width: 100%;
+    }
+}
+
+/* ===================================================================
+   [vjbe] Light/dark toggle (theme.js), pinned to the bottom-left corner
+   =================================================================== */
+.theme-toggle {
+    position: fixed;
+    left: max(1rem, env(safe-area-inset-left));
+    bottom: max(1rem, env(safe-area-inset-bottom));
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    padding: 0;
+    color: var(--tufte-muted);
+    line-height: 0;
+    background: var(--tufte-panel);
+    border: 1px solid var(--tufte-panel-edge);
+    border-radius: 50%;
+    box-shadow: 0 6px 16px -10px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+}
+
+.theme-toggle[hidden] {
+    display: none;
+}
+
+.theme-toggle:hover {
+    color: var(--tufte-ink);
+}
+
+.theme-toggle svg {
+    width: 1.05rem;
+    height: 1.05rem;
+}
+
+/* It shows the theme it switches to */
+.theme-icon-light,
+:root[data-theme="dark"] .theme-icon-dark {
+    display: none;
+}
+
+:root[data-theme="dark"] .theme-icon-light {
+    display: inline;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .theme-icon-light {
+        display: inline;
+    }
+
+    :root:not([data-theme="light"]) .theme-icon-dark {
+        display: none;
+    }
+}
+
+/* ===================================================================
+   [vjbe] Print: always light, black on white, no screen-only furniture
+   =================================================================== */
+.print-only {
+    display: none;
+}
+
+@media print {
+    :root,
+    :root[data-theme="dark"] {
+        color-scheme: light;
+        --tufte-bg: #fff;
+        --tufte-ink: #000;
+        --tufte-muted: #555;
+        --tufte-rule: #bbb;
+    }
+
+    @page {
+        margin: 15mm;
+    }
+
+    html {
+        font-size: 11pt;
+    }
+
+    body {
+        width: 100%;
+        max-width: none;
+        margin: 0;
+        padding-left: 0;
+    }
+
+    .theme-toggle,
+    .no-print {
+        display: none !important;
+    }
+
+    .print-only {
+        display: block;
+    }
+
+    h1,
+    h2,
+    h3 {
+        break-after: avoid;
+    }
+
+    figure,
+    blockquote,
+    pre,
+    table {
+        break-inside: avoid;
+    }
+
+    p {
+        orphans: 3;
+        widows: 3;
+    }
+
+    a:link,
+    a:visited {
+        color: inherit;
     }
 }

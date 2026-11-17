@@ -27,7 +27,8 @@
   "files": [
     "tufte.css",
     "tufte.min.css",
-    "et-book/"
+    "et-book/",
+    "theme.js"
   ],
   "engines": {
     "node": ">=18"
