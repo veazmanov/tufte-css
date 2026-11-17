@@ -497,7 +497,8 @@ label.margin-toggle:not(.sidenote-number) {
 /* ===================================================================
    [vjbe] Light/dark toggle (theme.js), pinned to the bottom-left corner
    =================================================================== */
-.theme-toggle {
+.theme-toggle,
+.print-button {
     position: fixed;
     left: max(1rem, env(safe-area-inset-left));
     bottom: max(1rem, env(safe-area-inset-bottom));
@@ -521,11 +522,18 @@ label.margin-toggle:not(.sidenote-number) {
     display: none;
 }
 
-.theme-toggle:hover {
+/* [vjbe] A print button (<button class="print-button" onclick="print()">), sitting just right of the toggle */
+.print-button {
+    left: calc(max(1rem, env(safe-area-inset-left)) + 3rem);
+}
+
+.theme-toggle:hover,
+.print-button:hover {
     color: var(--tufte-ink);
 }
 
-.theme-toggle svg {
+.theme-toggle svg,
+.print-button svg {
     width: 1.05rem;
     height: 1.05rem;
 }
@@ -583,6 +591,7 @@ label.margin-toggle:not(.sidenote-number) {
     }
 
     .theme-toggle,
+    .print-button,
     .no-print {
         display: none !important;
     }

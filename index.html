@@ -5,12 +5,17 @@
     <title>Tufte CSS</title>
     <link rel="stylesheet" href="tufte.css"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>try{var t=localStorage.getItem('tufte-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
   </head>
 
   <body>
     <article>
       <h1 id="tufte-css">Tufte CSS</h1>
       <p class="subtitle">Dave Liepmann</p>
+      <section>
+        <p class="no-print"><span class="newthought">This is a fork</span> of <a href="https://github.com/edwardtufte/tufte-css">Tufte CSS</a>, kept at <a href="https://github.com/veazmanov/tufte-css">veazmanov/tufte-css</a>. It adds a light/dark toggle and a print button (bottom left), print styles, and <code>box-sizing: border-box</code>. Try the buttons: the dark theme follows your system until you pick one, and the printout is always black on white.</p>
+        <p class="print-only"><em>Printed from veazmanov.github.io/tufte-css</em></p>
+      </section>
       <section>
         <p>Tufte CSS provides tools to style web articles using the ideas demonstrated by Edward Tufte’s books and handouts. Tufte’s style is known for its simplicity, extensive use of sidenotes, tight integration of graphics with text, and carefully chosen typography.</p>
         <p>Tufte CSS was created by <a href="http://www.daveliepmann.com">Dave Liepmann</a> and is now an Edward Tufte project. The original idea was cribbed from <a href="https://tufte-latex.github.io/tufte-latex/">Tufte-LaTeX</a> and <a href="http://rmarkdown.rstudio.com/tufte_handout_format.html">R Markdown’s Tufte Handout format</a>. We give hearty thanks to all the people who have contributed to those projects.</p>
@@ -154,6 +159,9 @@
         <p>Many thanks go to Edward Tufte for leading the way with his work. It is only through his kind and careful editing that this project accomplishes what it does. All errors of implementation are of course mine.</p>
       </section>
     </article>
+    <button type="button" class="print-button" onclick="print()" aria-label="Print this page" title="Print this page">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" d="M7 9V3.5h10V9M7 17H4.5V9h15v8H17M7 13.5h10V20.5H7z"/></svg>
+    </button>
     <script src="theme.js"></script>
   </body>
 </html>

@@ -8,7 +8,10 @@ the vjbe.net projects so none of them keeps its own copy. Changes are marked `[v
 - **Dark mode as variables** (`--tufte-bg`, `--tufte-ink`, `--tufte-muted`, `--tufte-rule`,
   `--tufte-panel`, `--tufte-panel-edge`). It follows the system setting, and
   `<html data-theme="light|dark">` overrides it.
-- **A light/dark toggle** pinned bottom-left (`theme.js`, adds its own button).
+- **A light/dark toggle** pinned bottom-left (`theme.js`, adds its own button), and a
+  `.print-button` class that sits beside it.
+
+Demo: https://veazmanov.github.io/tufte-css/
 - **Print as a first-class citizen**: always light, `@page` margins, no breaks after headings
   or inside figures/tables, and `.no-print` / `.print-only` helper classes.
 
