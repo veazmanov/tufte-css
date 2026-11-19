@@ -56,8 +56,6 @@
     --tufte-rule: #ccc;
     --tufte-panel: #f3eedf;
     --tufte-panel-edge: #ddd3b9;
-    --tufte-link: #1f4e9e;
-    --tufte-link-visited: #5b3e96;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -69,8 +67,6 @@
         --tufte-rule: #444;
         --tufte-panel: #2a2a2a;
         --tufte-panel-edge: #444;
-        --tufte-link: #8ab4f0;
-        --tufte-link-visited: #b9a3e3;
     }
 }
 
@@ -82,8 +78,6 @@
     --tufte-rule: #444;
     --tufte-panel: #2a2a2a;
     --tufte-panel-edge: #444;
-    --tufte-link: #8ab4f0;
-    --tufte-link-visited: #b9a3e3;
 }
 
 /* Tufte CSS styles */
@@ -271,17 +265,17 @@ figure.fullwidth figcaption {
     margin-right: 24%;
 }
 
-/* [vjbe] Links are coloured as well as underlined. To get upstream's ink-coloured links back, set
-   --tufte-link and --tufte-link-visited to var(--tufte-ink) in your own CSS. */
+/* Links take the colour of the text around them; the underline is enough. A project that wants coloured
+   links can set --tufte-link (and --tufte-link-visited) in its own CSS. */
 a:link,
 a:visited {
-    color: var(--tufte-link);
+    color: var(--tufte-link, inherit);
     text-underline-offset: 0.1em;
     text-decoration-thickness: 0.05em;
 }
 
 a:visited {
-    color: var(--tufte-link-visited);
+    color: var(--tufte-link-visited, var(--tufte-link, inherit));
 }
 
 /* [vjbe] Links don't go inside sentences. As in Gemini, each link stands on a line of its own: in a
@@ -617,9 +611,6 @@ label.margin-toggle:not(.sidenote-number) {
         --tufte-ink: #000;
         --tufte-muted: #555;
         --tufte-rule: #bbb;
-        /* dark enough to read as black on a black-and-white printer */
-        --tufte-link: #123a7a;
-        --tufte-link-visited: #123a7a;
     }
 
     @page {

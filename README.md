@@ -8,12 +8,12 @@ Demo: https://tufte.vjbe.net/
 
 - **`box-sizing: border-box`** on everything (mobile gutters narrowed to match).
 - **Dark mode as variables** (`--tufte-bg`, `--tufte-ink`, `--tufte-muted`, `--tufte-rule`,
-  `--tufte-panel`, `--tufte-panel-edge`, `--tufte-link`, `--tufte-link-visited`). It follows the
+  `--tufte-panel`, `--tufte-panel-edge`). It follows the
   system setting, and `<html data-theme="light|dark">` overrides it.
 - **Gemini-style links.** Links don't go inside sentences: each stands on a line of its own, in a
   sidenote or in a `<ul class="links">` at the end of its section (marked ⇒, address printed
   underneath on paper). Internal `#` links may stay in the text; `theme.js` warns in the console
-  about any other link inside a paragraph. Links are coloured (`--tufte-link`, `--tufte-link-visited`).
+  about any other link inside a paragraph. Links are the colour of the text, underlined; set `--tufte-link` / `--tufte-link-visited` to colour them.
 - **A light/dark toggle** pinned bottom-left (`theme.js`, adds its own button), and a
   `.print-button` class that sits beside it.
 - **Print as a first-class citizen**: always light; the sidenote layout is kept on paper (the
@@ -33,7 +33,7 @@ Link the current major version from tufte.vjbe.net:
 <script src="https://tufte.vjbe.net/2/theme.js" data-cookie-domain="vjbe.net"></script>
 ```
 
-`/2/` gets every 2.x release; `/2.1.0/` never changes. Or vendor it as a submodule:
+`/2/` gets every 2.x release; `/2.2.0/` never changes. Or vendor it as a submodule:
 
 ```bash
 git submodule add https://github.com/veazmanov/tufte-css.git <web-root>/tufte
