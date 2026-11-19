@@ -1,10 +1,10 @@
 {
-  "name": "tufte-css",
-  "version": "1.9.0",
+  "name": "tufte-css-vjbe",
+  "version": "2.0.0",
   "description": "Tufte CSS provides tools to style web articles using the ideas demonstrated by Edward Tufte’s books and handouts. Edward Tufte uses a distinctive style in his handouts: simple, with well-set typography, extensive sidenotes, and tight integration of graphics and charts.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/edwardtufte/tufte-css.git"
+    "url": "git+https://github.com/veazmanov/tufte-css.git"
   },
   "keywords": [
     "tufte",
@@ -16,13 +16,13 @@
   "author": "Dave Liepmann",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/edwardtufte/tufte-css/issues"
+    "url": "https://github.com/veazmanov/tufte-css/issues"
   },
-  "homepage": "https://edwardtufte.github.io/tufte-css/",
+  "homepage": "https://tufte.vjbe.net/",
   "scripts": {
     "build": "cleancss -o tufte.min.css tufte.css",
-    "prepublish": "npm run build",
-    "test": "playwright test"
+    "test": "npm run build && playwright test",
+    "release": "npm run build && ./release.sh"
   },
   "files": [
     "tufte.css",
@@ -36,5 +36,9 @@
   "devDependencies": {
     "@playwright/test": "^1.61.1",
     "clean-css-cli": "^5.6.3"
-  }
+  },
+  "private": true,
+  "contributors": [
+    "Victor Elgersma-Azmanov (vjbe fork)"
+  ]
 }

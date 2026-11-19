@@ -2,33 +2,49 @@ Tufte CSS (vjbe fork)
 =====================
 A fork of [edwardtufte/tufte-css](https://github.com/edwardtufte/tufte-css), shared by
 the vjbe.net projects so none of them keeps its own copy. Changes are marked `[vjbe]` in
-`tufte.css`:
+`tufte.css`.
+
+Demo: https://tufte.vjbe.net/
 
 - **`box-sizing: border-box`** on everything (mobile gutters narrowed to match).
 - **Dark mode as variables** (`--tufte-bg`, `--tufte-ink`, `--tufte-muted`, `--tufte-rule`,
-  `--tufte-panel`, `--tufte-panel-edge`). It follows the system setting, and
-  `<html data-theme="light|dark">` overrides it.
+  `--tufte-panel`, `--tufte-panel-edge`, `--tufte-link`, `--tufte-link-visited`). It follows the
+  system setting, and `<html data-theme="light|dark">` overrides it.
+- **Coloured links.** Set `--tufte-link` and `--tufte-link-visited` to `var(--tufte-ink)` for
+  upstream's ink-coloured ones.
 - **A light/dark toggle** pinned bottom-left (`theme.js`, adds its own button), and a
   `.print-button` class that sits beside it.
-
-Demo: https://veazmanov.github.io/tufte-css/
-- **Print as a first-class citizen**: always light, `@page` margins, no breaks after headings
-  or inside figures/tables, and `.no-print` / `.print-only` helper classes.
+- **Print as a first-class citizen**: always light; the sidenote layout is kept on paper (the
+  mobile layout is screen-only); the address of every external link is printed, in the margin
+  for body paragraphs (`.no-url` opts a link out); a "Printed from <url> on <date>" line
+  (`.print-source`, filled in by `theme.js`, added automatically if missing); page numbers
+  (Chrome 131+); wrapped code; iframes replaced by their link; no breaks after headings or
+  inside figures/tables; `.no-print` / `.print-only` helper classes.
 
 ### Using it in a project
+
+Link the current major version from tufte.vjbe.net:
+
+```html
+<link rel="stylesheet" href="https://tufte.vjbe.net/2/tufte.css">
+<!-- optional toggle; data-key, data-cookie-domain and data-print-source are optional -->
+<script src="https://tufte.vjbe.net/2/theme.js" data-cookie-domain="vjbe.net"></script>
+```
+
+`/2/` gets every 2.x release; `/2.0.0/` never changes. Or vendor it as a submodule:
 
 ```bash
 git submodule add https://github.com/veazmanov/tufte-css.git <web-root>/tufte
 ```
 
-```html
-<link rel="stylesheet" href="/tufte/tufte.css">
-<!-- optional toggle; data-key and data-cookie-domain are optional -->
-<script src="/tufte/theme.js" data-key="tufte-theme"></script>
-```
-
 See the top of `theme.js` for a `<head>` snippet that stops the wrong theme flashing on load.
 Put your own styles in a separate stylesheet loaded after `tufte.css`.
+
+### Releasing
+
+1. Bump `version` in `package.json` (major for anything that changes how existing pages look).
+2. `npm test` (rebuilds `tufte.min.css`), then commit.
+3. `npm run release`: builds `dist/`, deploys it with `deploy dist tufte`, tags and pushes `v<version>`.
 
 ### Pulling in upstream changes
 

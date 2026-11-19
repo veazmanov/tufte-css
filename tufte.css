@@ -56,6 +56,8 @@
     --tufte-rule: #ccc;
     --tufte-panel: #f3eedf;
     --tufte-panel-edge: #ddd3b9;
+    --tufte-link: #1f4e9e;
+    --tufte-link-visited: #5b3e96;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -67,6 +69,8 @@
         --tufte-rule: #444;
         --tufte-panel: #2a2a2a;
         --tufte-panel-edge: #444;
+        --tufte-link: #8ab4f0;
+        --tufte-link-visited: #b9a3e3;
     }
 }
 
@@ -78,6 +82,8 @@
     --tufte-rule: #444;
     --tufte-panel: #2a2a2a;
     --tufte-panel-edge: #444;
+    --tufte-link: #8ab4f0;
+    --tufte-link-visited: #b9a3e3;
 }
 
 /* Tufte CSS styles */
@@ -265,11 +271,17 @@ figure.fullwidth figcaption {
     margin-right: 24%;
 }
 
+/* [vjbe] Links are coloured as well as underlined. To get upstream's ink-coloured links back, set
+   --tufte-link and --tufte-link-visited to var(--tufte-ink) in your own CSS. */
 a:link,
 a:visited {
-    color: inherit;
+    color: var(--tufte-link);
     text-underline-offset: 0.1em;
     text-decoration-thickness: 0.05em;
+}
+
+a:visited {
+    color: var(--tufte-link-visited);
 }
 
 /* Sidenotes, margin notes, figures, captions */
@@ -414,7 +426,8 @@ label.margin-toggle:not(.sidenote-number) {
     height: 100%;
 }
 
-@media (max-width: 760px) {
+/* [vjbe] screen only: a printed A4 page is under 760px wide, and this block would hide the sidenotes */
+@media screen and (max-width: 760px) {
     body {
         width: 84%;
         /* [vjbe] narrower gutters, as on lib.vjbe.net (border-box puts the padding inside the width) */
@@ -561,7 +574,8 @@ label.margin-toggle:not(.sidenote-number) {
 /* ===================================================================
    [vjbe] Print: always light, black on white, no screen-only furniture
    =================================================================== */
-.print-only {
+.print-only,
+.print-source {
     display: none;
 }
 
@@ -573,10 +587,20 @@ label.margin-toggle:not(.sidenote-number) {
         --tufte-ink: #000;
         --tufte-muted: #555;
         --tufte-rule: #bbb;
+        /* dark enough to read as black on a black-and-white printer */
+        --tufte-link: #123a7a;
+        --tufte-link-visited: #123a7a;
     }
 
     @page {
         margin: 15mm;
+
+        /* page numbers: Chrome 131+; other browsers ignore it */
+        @bottom-center {
+            content: counter(page);
+            font-family: et-book, Palatino, "Palatino Linotype", Georgia, serif;
+            font-size: 9pt;
+        }
     }
 
     html {
@@ -592,12 +616,51 @@ label.margin-toggle:not(.sidenote-number) {
 
     .theme-toggle,
     .print-button,
-    .no-print {
+    .no-print,
+    label.margin-toggle:not(.sidenote-number),
+    iframe {
         display: none !important;
     }
 
     .print-only {
         display: block;
+    }
+
+    /* "Printed from <url> on <date>": theme.js fills it in */
+    .print-source {
+        display: block;
+        margin: 0 0 1rem;
+        font-size: 0.9rem;
+        color: var(--tufte-muted);
+        word-break: break-all;
+    }
+
+    /* Less empty space above the title on page one */
+    article {
+        padding-top: 0;
+    }
+
+    h1 {
+        margin-top: 1rem;
+    }
+
+    p,
+    li,
+    dd {
+        hyphens: auto;
+    }
+
+    /* Code is cut off on paper, so wrap it instead of scrolling */
+    pre > code {
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        overflow-x: visible;
+    }
+
+    /* An embedded video becomes a pointer to it */
+    .iframe-wrapper {
+        height: auto;
+        padding: 0;
     }
 
     h1,
@@ -618,8 +681,28 @@ label.margin-toggle:not(.sidenote-number) {
         widows: 3;
     }
 
-    a:link,
-    a:visited {
-        color: inherit;
+    /* [vjbe] A printed page has to show where its links go. The address follows the link
+       (or sits in the margin, see below). Skipped: internal #anchors and links with class .no-url,
+       e.g. links whose text already is the address. */
+    a[href^="http"]:not(.no-url)::after {
+        content: " \27E8" attr(href) "\27E9";
+        font-size: 0.85em;
+        color: var(--tufte-muted);
+        overflow-wrap: anywhere;
+    }
+
+    /* In body paragraphs the address goes into the margin, like a margin note */
+    section > p a[href^="http"]:not(.no-url):not(.sidenote a):not(.marginnote a)::after {
+        content: attr(href);
+        float: right;
+        clear: right;
+        margin-right: -60%;
+        width: 50%;
+        margin-top: 0.3rem;
+        font-size: 0.85rem;
+        line-height: 1.3;
+        text-align: left;
+        text-decoration: none;
+        display: block;
     }
 }

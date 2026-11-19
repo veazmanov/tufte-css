@@ -5,7 +5,8 @@
     <title>Tufte CSS</title>
     <link rel="stylesheet" href="tufte.css"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script>try{var t=localStorage.getItem('tufte-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
+    <link rel="canonical" href="https://tufte.vjbe.net/"/>
+    <script>try{var t=(document.cookie.match(/(?:^|; )tufte-theme=(light|dark)/)||[])[1]||localStorage.getItem('tufte-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
   </head>
 
   <body>
@@ -13,8 +14,8 @@
       <h1 id="tufte-css">Tufte CSS</h1>
       <p class="subtitle">Dave Liepmann</p>
       <section>
-        <p class="no-print"><span class="newthought">This is a fork</span> of <a href="https://github.com/edwardtufte/tufte-css">Tufte CSS</a>, kept at <a href="https://github.com/veazmanov/tufte-css">veazmanov/tufte-css</a>. It adds a light/dark toggle and a print button (bottom left), print styles, and <code>box-sizing: border-box</code>. Try the buttons: the dark theme follows your system until you pick one, and the printout is always black on white.</p>
-        <p class="print-only"><em>Printed from veazmanov.github.io/tufte-css</em></p>
+        <p class="no-print"><span class="newthought">This is a fork</span> of <a href="https://github.com/edwardtufte/tufte-css">Tufte CSS</a>, kept at <a href="https://github.com/veazmanov/tufte-css">veazmanov/tufte-css</a>. It adds a light/dark toggle and a print button (bottom left), print styles, coloured links, and <code>box-sizing: border-box</code>. Try the buttons: the dark theme follows your system until you pick one, and the printout is always black on white, with the address of every link printed in the margin.</p>
+        <p class="print-source"></p>
       </section>
       <section>
         <p>Tufte CSS provides tools to style web articles using the ideas demonstrated by Edward Tufte’s books and handouts. Tufte’s style is known for its simplicity, extensive use of sidenotes, tight integration of graphics with text, and carefully chosen typography.</p>
@@ -49,7 +50,8 @@
         <p>In print, Tufte has used the proprietary Monotype Bembo<label for="sn-proprietary-monotype-bembo" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-proprietary-monotype-bembo" class="margin-toggle"/><span class="sidenote">See Tufte’s comment in the <a href="http://www.edwardtufte.com/bboard/q-and-a-fetch-msg?msg_id=0000Vt">Tufte book fonts</a> thread.</span> font. A similar effect is achieved in digital formats with the now open-source <a href="https://github.com/edwardtufte/et-book">ETBook</a>, which Tufte CSS supplies with a <code>@font-face</code> reference to a .ttf file. In case ETBook somehow doesn’t work, Tufte CSS shifts gracefully to other serif fonts like Palatino and Georgia.</p>
         <p>Also notice how Tufte CSS includes separate font files for bold (strong) and italic (emphasis), instead of relying on the browser to mechanically transform the text. This is typographic best practice.</p>
         <p class="sans">If you prefer sans-serifs, use the <code>sans</code> class. It relies on Gill Sans, Tufte’s sans-serif font of choice.</p>
-        <p>Links in Tufte CSS match the body text in color and do not change on mouseover or when clicked. Here is a <a href="#">dummy example</a> that goes nowhere. These links are underlined, since this is the most widely recognized indicator of clickable text. <label for="mn-blue-links" class="margin-toggle">&#8853;</label><input type="checkbox" id="mn-blue-links" class="margin-toggle"/><span class="marginnote">Blue text, while also a widely recognizable clickable-text indicator, is crass and distracting. Luckily, it is also rendered unnecessary by the use of underlining.</span>
+        <p>Links in this fork are underlined <em>and</em> coloured, like <a href="https://en.wikipedia.org/wiki/Hyperlink">this one</a>, and the colours follow the theme. Set <code>--tufte-link</code> and <code>--tufte-link-visited</code> to <code>var(--tufte-ink)</code> to get upstream’s ink-coloured links back.<label for="mn-blue-links" class="margin-toggle">&#8853;</label><input type="checkbox" id="mn-blue-links" class="margin-toggle"/><span class="marginnote">Upstream calls blue links “crass and distracting”. This fork treats print as a first-class medium: a reader should always be able to see where a link goes, on screen or on paper.</span></p>
+        <p>When the page is printed, the address of every external link appears next to it: in the margin for links in body paragraphs, in angle brackets elsewhere. Internal <code>#</code> links are skipped, and so are links with the class <code>no-url</code>, for links whose text already is the address. A line at the top of the printout says which page it was printed from and when; <code>theme.js</code> fills it in.</p>
         <p>As always, these design choices are merely one approach that Tufte CSS provides by default. Other approaches can also be made to work. The goal is to make sentences readable without interference from links, as well as to make links immediately identifiable even by casual web users.</p>
       </section>
 

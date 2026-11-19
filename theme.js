@@ -7,6 +7,12 @@
 //     <script src="tufte/theme.js" data-key="tufte-theme" data-cookie-domain="example.net"></script>
 // Both attributes are optional. If the page has no element with class "theme-toggle", a button is added.
 //
+// For printing it also
+//  - fills every element with class "print-source" with "Printed from <url> on <date>" (the page's
+//    <link rel="canonical"> if it has one). If there is none, one is put at the top of the first <article>;
+//    data-print-source="false" on the script turns that off.
+//  - puts a print-only link under each embedded iframe, since the iframe itself prints as a blank box.
+//
 // To avoid a flash of the wrong theme, also put this in <head> (same key):
 //     <script>try{var t=(document.cookie.match(/(?:^|; )tufte-theme=(light|dark)/)||[])[1]||localStorage.getItem('tufte-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
 (function () {
@@ -65,4 +71,37 @@
     system.addEventListener('change', label);
     label();
     button.hidden = false;
+
+    // Printing: say where the page came from
+    var canonical = document.querySelector('link[rel="canonical"]');
+    var sources = document.querySelectorAll('.print-source');
+    if (!sources.length && !(script && script.dataset.printSource === 'false')) {
+        var host = document.querySelector('article') || document.body;
+        var p = document.createElement('p');
+        p.className = 'print-source';
+        host.insertBefore(p, host.firstChild);
+        sources = [p];
+    }
+
+    function fillSources() {
+        var url = (canonical && canonical.href) || location.href.split('#')[0];
+        var date = new Date().toLocaleDateString(document.documentElement.lang || undefined, {
+            year: 'numeric', month: 'long', day: 'numeric'
+        });
+        for (var i = 0; i < sources.length; i++) {
+            sources[i].textContent = 'Printed from ' + url + ' on ' + date;
+        }
+    }
+    fillSources();
+    window.addEventListener('beforeprint', fillSources);
+
+    // Printing: an iframe prints as a blank box, so give it a link
+    var frames = document.querySelectorAll('iframe[src]');
+    for (var j = 0; j < frames.length; j++) {
+        var link = document.createElement('a');
+        link.className = 'print-only no-url';
+        link.href = frames[j].src;
+        link.textContent = frames[j].src;
+        frames[j].parentNode.insertBefore(link, frames[j].nextSibling);
+    }
 })();
