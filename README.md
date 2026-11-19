@@ -10,13 +10,15 @@ Demo: https://tufte.vjbe.net/
 - **Dark mode as variables** (`--tufte-bg`, `--tufte-ink`, `--tufte-muted`, `--tufte-rule`,
   `--tufte-panel`, `--tufte-panel-edge`, `--tufte-link`, `--tufte-link-visited`). It follows the
   system setting, and `<html data-theme="light|dark">` overrides it.
-- **Coloured links.** Set `--tufte-link` and `--tufte-link-visited` to `var(--tufte-ink)` for
-  upstream's ink-coloured ones.
+- **Gemini-style links.** Links don't go inside sentences: each stands on a line of its own, in a
+  sidenote or in a `<ul class="links">` at the end of its section (marked ⇒, address printed
+  underneath on paper). Internal `#` links may stay in the text; `theme.js` warns in the console
+  about any other link inside a paragraph. Links are coloured (`--tufte-link`, `--tufte-link-visited`).
 - **A light/dark toggle** pinned bottom-left (`theme.js`, adds its own button), and a
   `.print-button` class that sits beside it.
 - **Print as a first-class citizen**: always light; the sidenote layout is kept on paper (the
-  mobile layout is screen-only); the address of every external link is printed, in the margin
-  for body paragraphs (`.no-url` opts a link out); a "Printed from <url> on <date>" line
+  mobile layout is screen-only); the address of every external link is printed (`.no-url` opts a
+  link out); a "Printed from <url> on <date>" line
   (`.print-source`, filled in by `theme.js`, added automatically if missing); page numbers
   (Chrome 131+); wrapped code; iframes replaced by their link; no breaks after headings or
   inside figures/tables; `.no-print` / `.print-only` helper classes.
@@ -31,7 +33,7 @@ Link the current major version from tufte.vjbe.net:
 <script src="https://tufte.vjbe.net/2/theme.js" data-cookie-domain="vjbe.net"></script>
 ```
 
-`/2/` gets every 2.x release; `/2.0.0/` never changes. Or vendor it as a submodule:
+`/2/` gets every 2.x release; `/2.1.0/` never changes. Or vendor it as a submodule:
 
 ```bash
 git submodule add https://github.com/veazmanov/tufte-css.git <web-root>/tufte

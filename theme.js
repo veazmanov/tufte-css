@@ -12,6 +12,7 @@
 //    <link rel="canonical"> if it has one). If there is none, one is put at the top of the first <article>;
 //    data-print-source="false" on the script turns that off.
 //  - puts a print-only link under each embedded iframe, since the iframe itself prints as a blank box.
+// and warns in the console about links inside paragraphs, which should be in a sidenote or <ul class="links">.
 //
 // To avoid a flash of the wrong theme, also put this in <head> (same key):
 //     <script>try{var t=(document.cookie.match(/(?:^|; )tufte-theme=(light|dark)/)||[])[1]||localStorage.getItem('tufte-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
@@ -94,6 +95,14 @@
     }
     fillSources();
     window.addEventListener('beforeprint', fillSources);
+
+    // Links belong on lines of their own (a sidenote or a <ul class="links">), not inside sentences
+    var inline = document.querySelectorAll(
+        'section > p a[href]:not([href^="#"]):not(.sidenote a):not(.marginnote a)');
+    if (inline.length) {
+        console.warn('tufte: ' + inline.length + ' link(s) inside paragraphs; put them in a sidenote ' +
+            'or a <ul class="links"> at the end of the section', inline);
+    }
 
     // Printing: an iframe prints as a blank box, so give it a link
     var frames = document.querySelectorAll('iframe[src]');

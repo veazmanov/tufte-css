@@ -284,6 +284,32 @@ a:visited {
     color: var(--tufte-link-visited);
 }
 
+/* [vjbe] Links don't go inside sentences. As in Gemini, each link stands on a line of its own: in a
+   sidenote, or in a list of links at the end of its section, <ul class="links"><li><a>…</a></li></ul>. */
+section > ul.links,
+ul.links {
+    width: 55%;
+    padding-left: 0;
+    -webkit-padding-start: 0;
+    padding-inline-start: 0;
+    list-style: none;
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+}
+
+ul.links > li {
+    padding-left: 1.5em;
+    text-indent: -1.5em;
+}
+
+ul.links > li::before {
+    content: "\21D2";
+    display: inline-block;
+    width: 1.5em;
+    text-indent: 0;
+    color: var(--tufte-muted);
+}
+
 /* Sidenotes, margin notes, figures, captions */
 img {
     max-width: 100%;
@@ -450,6 +476,10 @@ label.margin-toggle:not(.sidenote-number) {
     section > ol,
     section > ul {
         width: 90%;
+    }
+
+    section > ul.links {
+        width: 100%;
     }
 
     figure {
@@ -685,13 +715,29 @@ label.margin-toggle:not(.sidenote-number) {
        (or sits in the margin, see below). Skipped: internal #anchors and links with class .no-url,
        e.g. links whose text already is the address. */
     a[href^="http"]:not(.no-url)::after {
-        content: " \27E8" attr(href) "\27E9";
+        content: "\27E8" attr(href) "\27E9";
+        display: inline-block; /* so the link's underline doesn't carry over */
+        margin-left: 0.25em;
         font-size: 0.85em;
         color: var(--tufte-muted);
         overflow-wrap: anywhere;
     }
 
-    /* In body paragraphs the address goes into the margin, like a margin note */
+    /* In a list of links the address goes on the line under the link */
+    ul.links a[href^="http"]:not(.no-url)::after {
+        content: attr(href);
+        display: inline-block; /* takes the next line, and the link's underline doesn't carry over */
+        width: 100%;
+        text-indent: 0;
+        font-size: 0.8em;
+        text-decoration: none;
+    }
+
+    ul.links > li {
+        break-inside: avoid;
+    }
+
+    /* Old pages that still have links in their sentences: the address goes into the margin */
     section > p a[href^="http"]:not(.no-url):not(.sidenote a):not(.marginnote a)::after {
         content: attr(href);
         float: right;
