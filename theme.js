@@ -5,7 +5,8 @@
 //
 // Usage, at the end of <body>:
 //     <script src="tufte/theme.js" data-key="tufte-theme" data-cookie-domain="example.net"></script>
-// Both attributes are optional. If the page has no element with class "theme-toggle", a button is added.
+// Both attributes are optional. If the page has no element with class "theme-toggle", a button is added, and
+// likewise a print button (class "print-button") beside it, unless the script has data-print-button="false".
 //
 // For printing it also
 //  - fills every element with class "print-source" with "Printed from <url> on <date>" (the page's
@@ -72,6 +73,20 @@
     system.addEventListener('change', label);
     label();
     button.hidden = false;
+
+    // A print button beside the toggle
+    if (!document.querySelector('.print-button') && !(script && script.dataset.printButton === 'false')) {
+        var printButton = document.createElement('button');
+        printButton.type = 'button';
+        printButton.className = 'print-button';
+        printButton.setAttribute('aria-label', 'Print this page');
+        printButton.title = 'Print this page';
+        printButton.innerHTML =
+            '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" ' +
+            'stroke-width="1.6" stroke-linejoin="round" d="M7 9V3.5h10V9M7 17H4.5V9h15v8H17M7 13.5h10V20.5H7z"/></svg>';
+        printButton.addEventListener('click', function () { window.print(); });
+        document.body.appendChild(printButton);
+    }
 
     // Printing: say where the page came from
     var canonical = document.querySelector('link[rel="canonical"]');

@@ -7,15 +7,31 @@ the vjbe.net projects so none of them keeps its own copy. Changes are marked `[v
 Demo: https://tufte.vjbe.net/
 
 - **`box-sizing: border-box`** on everything (mobile gutters narrowed to match).
-- **Dark mode as variables** (`--tufte-bg`, `--tufte-ink`, `--tufte-muted`, `--tufte-rule`,
-  `--tufte-panel`, `--tufte-panel-edge`). It follows the
-  system setting, and `<html data-theme="light|dark">` overrides it.
+- **A warm paper palette, with dark mode, as variables.** It follows the system setting, and
+  `<html data-theme="light|dark">` overrides it. Projects should use these rather than colours of their own:
+
+  | Variable | Light | Dark | For |
+  |---|---|---|---|
+  | `--tufte-bg` | `#fffff8` | `#1a1814` | the page |
+  | `--tufte-paper`, `--tufte-paper-edge` | `#fdfaef`, `#e7dfc9` | `#23201a`, `#3a3428` | a sheet on the page: cards, plaques |
+  | `--tufte-panel`, `--tufte-panel-edge`, `--tufte-panel-hover` | `#f3eedf`, `#ddd3b9`, `#e9e2cd` | `#2a261f`, `#463f32`, `#353026` | panels and buttons |
+  | `--tufte-ink`, `--tufte-ink-soft` | `#1a1712`, `#4a4438` | `#e8e1d1`, `#c9c0ad` | text |
+  | `--tufte-muted`, `--tufte-faint` | `#6b6455`, `#a39a87` | `#a39a87`, `#7a7262` | captions, notes, quiet controls |
+  | `--tufte-rule` | `#d8d2c4` | `#3d382f` | hairlines |
+  | `--tufte-accent` | `#8a2b1d` | `#d9826f` | sparingly: ornaments, the current page |
+  | `--tufte-shadow-rgb` | `60, 45, 10` | `0, 0, 0` | `rgba(var(--tufte-shadow-rgb), 0.1)` |
+  | `--tufte-img-dim` | `brightness(1)` | `brightness(0.85)` | a `filter` for photographs (never inverted) |
+
+  Printing always uses the light values, on white.
 - **Gemini-style links.** Links don't go inside sentences: each stands on a line of its own, in a
   sidenote or in a `<ul class="links">` at the end of its section (marked ⇒, address printed
   underneath on paper). Internal `#` links may stay in the text; `theme.js` warns in the console
   about any other link inside a paragraph. Links are the colour of the text, underlined; set `--tufte-link` / `--tufte-link-visited` to colour them.
-- **A light/dark toggle** pinned bottom-left (`theme.js`, adds its own button), and a
-  `.print-button` class that sits beside it.
+- **A light/dark toggle and a print button**, pinned bottom-left. `theme.js` adds both
+  (`data-print-button="false"` leaves the print button out), or uses a `.theme-toggle` /
+  `.print-button` already in the page.
+- **Small fixes**: sidenote markers ignore an indented paragraph's first-line indent; an image in
+  a margin note sits above its caption and is dimmed in dark mode.
 - **Print as a first-class citizen**: always light; the sidenote layout is kept on paper (the
   mobile layout is screen-only); the address of every external link is printed (`.no-url` opts a
   link out); a "Printed from <url> on <date>" line
@@ -29,18 +45,20 @@ Link the current major version from tufte.vjbe.net:
 
 ```html
 <link rel="stylesheet" href="https://tufte.vjbe.net/2/tufte.css">
-<!-- optional toggle; data-key, data-cookie-domain and data-print-source are optional -->
+<!-- the toggle, print button and "Printed from" line; data-key, data-cookie-domain,
+     data-print-button and data-print-source are optional -->
 <script src="https://tufte.vjbe.net/2/theme.js" data-cookie-domain="vjbe.net"></script>
 ```
 
-`/2/` gets every 2.x release; `/2.2.0/` never changes. Or vendor it as a submodule:
+`/2/` gets every 2.x release; `/2.3.0/` never changes. Or vendor it as a submodule:
 
 ```bash
 git submodule add https://github.com/veazmanov/tufte-css.git <web-root>/tufte
 ```
 
 See the top of `theme.js` for a `<head>` snippet that stops the wrong theme flashing on load.
-Put your own styles in a separate stylesheet loaded after `tufte.css`.
+Put your own styles in a separate stylesheet loaded after `tufte.css`, using the `--tufte-` variables
+rather than colours of your own; anything generic belongs in this repo instead.
 
 ### Releasing
 

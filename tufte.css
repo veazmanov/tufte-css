@@ -46,38 +46,63 @@
     box-sizing: border-box;
 }
 
-/* [vjbe] Colours as variables. Dark follows the system setting unless <html data-theme="light|dark"> is set
-   (theme.js does that); the dark values are repeated for the two cases. Override any of them in your own CSS. */
+/* [vjbe] Colours as variables: a warm paper palette. Dark follows the system setting unless
+   <html data-theme="light|dark"> is set (theme.js does that); the dark values are repeated for the two cases.
+   Override any of them in your own CSS; a project should not need colours of its own. */
 :root {
     color-scheme: light;
-    --tufte-bg: #fffff8;
-    --tufte-ink: #111;
-    --tufte-muted: #666;
-    --tufte-rule: #ccc;
-    --tufte-panel: #f3eedf;
+    --tufte-bg: #fffff8;          /* the page */
+    --tufte-paper: #fdfaef;       /* a sheet on the page: cards, plaques */
+    --tufte-paper-edge: #e7dfc9;
+    --tufte-panel: #f3eedf;       /* panels and buttons */
     --tufte-panel-edge: #ddd3b9;
+    --tufte-panel-hover: #e9e2cd;
+    --tufte-ink: #1a1712;         /* text */
+    --tufte-ink-soft: #4a4438;
+    --tufte-muted: #6b6455;       /* captions, notes, quiet controls */
+    --tufte-faint: #a39a87;
+    --tufte-rule: #d8d2c4;        /* hairlines */
+    --tufte-accent: #8a2b1d;      /* sparing: ornaments, the current page */
+    --tufte-shadow-rgb: 60, 45, 10;
+    --tufte-img-dim: brightness(1); /* photographs are dimmed a little on a dark page, never inverted */
 }
 
 @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
         color-scheme: dark;
-        --tufte-bg: #151515;
-        --tufte-ink: #ddd;
-        --tufte-muted: #999;
-        --tufte-rule: #444;
-        --tufte-panel: #2a2a2a;
-        --tufte-panel-edge: #444;
+        --tufte-bg: #1a1814;
+        --tufte-paper: #23201a;
+        --tufte-paper-edge: #3a3428;
+        --tufte-panel: #2a261f;
+        --tufte-panel-edge: #463f32;
+        --tufte-panel-hover: #353026;
+        --tufte-ink: #e8e1d1;
+        --tufte-ink-soft: #c9c0ad;
+        --tufte-muted: #a39a87;
+        --tufte-faint: #7a7262;
+        --tufte-rule: #3d382f;
+        --tufte-accent: #d9826f;
+        --tufte-shadow-rgb: 0, 0, 0;
+        --tufte-img-dim: brightness(0.85);
     }
 }
 
 :root[data-theme="dark"] {
     color-scheme: dark;
-    --tufte-bg: #151515;
-    --tufte-ink: #ddd;
-    --tufte-muted: #999;
-    --tufte-rule: #444;
-    --tufte-panel: #2a2a2a;
-    --tufte-panel-edge: #444;
+    --tufte-bg: #1a1814;
+    --tufte-paper: #23201a;
+    --tufte-paper-edge: #3a3428;
+    --tufte-panel: #2a261f;
+    --tufte-panel-edge: #463f32;
+    --tufte-panel-hover: #353026;
+    --tufte-ink: #e8e1d1;
+    --tufte-ink-soft: #c9c0ad;
+    --tufte-muted: #a39a87;
+    --tufte-faint: #7a7262;
+    --tufte-rule: #3d382f;
+    --tufte-accent: #d9826f;
+    --tufte-shadow-rgb: 0, 0, 0;
+    --tufte-img-dim: brightness(0.85);
 }
 
 /* Tufte CSS styles */
@@ -425,6 +450,14 @@ input.margin-toggle {
 label.sidenote-number {
     display: inline-block;
     max-height: 2rem; /* should be less than or equal to paragraph line-height */
+    text-indent: 0; /* [vjbe] an inline block would otherwise take an indented paragraph's first-line indent */
+}
+
+/* [vjbe] An image in a margin note sits above its caption, dimmed a little in dark mode */
+.marginnote > img {
+    display: block;
+    filter: var(--tufte-img-dim);
+    margin-bottom: 0.5rem;
 }
 
 label.margin-toggle:not(.sidenote-number) {
@@ -551,7 +584,7 @@ label.margin-toggle:not(.sidenote-number) {
     background: var(--tufte-panel);
     border: 1px solid var(--tufte-panel-edge);
     border-radius: 50%;
-    box-shadow: 0 6px 16px -10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 6px 16px -10px rgba(var(--tufte-shadow-rgb), 0.5);
     cursor: pointer;
 }
 
@@ -604,13 +637,25 @@ label.margin-toggle:not(.sidenote-number) {
 }
 
 @media print {
+    /* every selector the dark theme uses, so paper is always light */
     :root,
+    :root:not([data-theme="light"]),
     :root[data-theme="dark"] {
         color-scheme: light;
         --tufte-bg: #fff;
         --tufte-ink: #000;
         --tufte-muted: #555;
         --tufte-rule: #bbb;
+        --tufte-paper: #fff;
+        --tufte-paper-edge: #ccc;
+        --tufte-panel: #fff;
+        --tufte-panel-edge: #ccc;
+        --tufte-panel-hover: #fff;
+        --tufte-ink-soft: #333;
+        --tufte-faint: #888;
+        --tufte-accent: #8a2b1d;
+        --tufte-shadow-rgb: 0, 0, 0;
+        --tufte-img-dim: none;
     }
 
     @page {
