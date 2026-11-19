@@ -305,15 +305,18 @@ a:visited {
 
 /* [vjbe] Links don't go inside sentences. As in Gemini, each link stands on a line of its own: in a
    sidenote, or in a list of links at the end of its section, <ul class="links"><li><a>…</a></li></ul>. */
-section > ul.links,
-ul.links {
+/* In the text column it is set a little smaller than the text; elsewhere (a panel, a note) at the size around it */
+section > ul.links {
     width: 55%;
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+}
+
+ul.links {
     padding-left: 0;
     -webkit-padding-start: 0;
     padding-inline-start: 0;
     list-style: none;
-    font-size: 1.2rem;
-    line-height: 1.6rem;
 }
 
 ul.links > li {
