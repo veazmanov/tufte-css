@@ -1,0 +1,19 @@
+{{- /* Markdown images: ![alt text](image.webp "Optional caption")
+       The quoted title becomes a caption in the margin, as in Tufte's figures.
+       src may be a page resource, a file in assets/ or static/, or an address.
+       An image alone in its paragraph becomes a <figure> when the site sets
+       markup.goldmark.parser.wrapStandAloneImageWithinParagraph = false;
+       otherwise it stays inside the paragraph, with its caption as a margin note. */ -}}
+{{- $src := .Destination -}}
+{{- with .PageInner.Resources.Get .Destination }}{{ $src = .RelPermalink }}{{ else }}{{ with resources.Get $.Destination }}{{ $src = .RelPermalink }}{{ end }}{{ end -}}
+{{- $img := printf `<img src="%s" alt="%s" loading="lazy">` ($src | safeURL) .PlainText -}}
+{{- $id := printf "mn-img-%d" .Ordinal -}}
+{{- $caption := "" -}}
+{{- with .Title -}}
+  {{- $caption = printf `<label for="%s" class="margin-toggle">&#8853;</label><input type="checkbox" id="%s" class="margin-toggle"/><span class="marginnote">%s</span>` $id $id (. | $.PageInner.RenderString) -}}
+{{- end -}}
+{{- if .IsBlock -}}
+<figure>{{ $caption | safeHTML }}{{ $img | safeHTML }}</figure>
+{{- else -}}
+{{ $caption | safeHTML }}{{ $img | safeHTML }}
+{{- end -}}
