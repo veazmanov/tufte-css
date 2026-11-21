@@ -7,7 +7,7 @@
   <h2>{{ .Key }}</h2>
   <ul class="links">
     {{- range .Pages }}
-    <li><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>, <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format (site.Params.tufte.listDateFormat | default "2 January") }}</time></li>
+    <li><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>, <time datetime="{{ .Date.Format "2006-01-02" }}">{{ replace (.Date | time.Format (site.Params.tufte.listDateFormat | default "2 January")) " " "\u00a0" }}</time></li>
     {{- end }}
   </ul>
 </section>
