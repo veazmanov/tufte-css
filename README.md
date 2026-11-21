@@ -30,6 +30,7 @@ Demo: https://tufte.vjbe.net/
 - **A light/dark toggle and a print button**, pinned bottom-left. `theme.js` adds both
   (`data-print-button="false"` leaves the print button out), or uses a `.theme-toggle` /
   `.print-button` already in the page.
+- **A page footer**: a `<footer>` straight inside `<body>` is set small and muted under a hairline.
 - **Small fixes**: sidenote markers ignore an indented paragraph's first-line indent; an image in
   a margin note sits above its caption and is dimmed in dark mode.
 - **Print as a first-class citizen**: always light; the sidenote layout is kept on paper (the

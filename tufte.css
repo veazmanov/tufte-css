@@ -567,6 +567,24 @@ label.margin-toggle:not(.sidenote-number) {
     }
 }
 
+/* [vjbe] A page footer: a <footer> straight inside <body>, after the <article>. Small and quiet, under a hairline;
+   its links go in a <ul class="links"> like any others. The bottom margin keeps it clear of the corner buttons. */
+body > footer {
+    margin: 2rem 0 5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--tufte-rule);
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--tufte-muted);
+}
+
+body > footer p,
+body > footer ul {
+    margin: 0 0 0.5rem;
+    font-size: inherit;
+    line-height: inherit;
+}
+
 /* ===================================================================
    [vjbe] Light/dark toggle (theme.js), pinned to the bottom-left corner
    =================================================================== */
