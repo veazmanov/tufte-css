@@ -1,0 +1,2 @@
+{{- /* Small caps for the first words of a section: {{< newthought >}}In his later books{{< /newthought >}}, Tufte… */ -}}
+<span class="newthought">{{ .Inner | strings.TrimSpace | .Page.RenderString }}</span>

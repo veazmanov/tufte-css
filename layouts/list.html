@@ -1,0 +1,12 @@
+{{ define "main" }}
+<article>
+  <h1>{{ .Title }}</h1>
+  {{- with .Params.subtitle }}
+  <p class="subtitle">{{ . }}</p>
+  {{- end }}
+  {{- with .Content }}
+  {{ partial "content.html" $ }}
+  {{- end }}
+  {{- partial "page-list.html" .Pages }}
+</article>
+{{ end }}

@@ -1,0 +1,11 @@
+{{- /* The site's name and its main menu, above the article. Not printed. */ -}}
+{{- if or (not .IsHome) site.Menus.main }}
+<nav class="no-print">
+  {{- if not .IsHome }}
+  <p><a href="{{ "/" | relURL }}">{{ site.Title }}</a>
+  {{- range site.Menus.main }} · <a href="{{ .URL }}">{{ .Name }}</a>{{ end }}</p>
+  {{- else }}
+  <p>{{ range $i, $m := site.Menus.main }}{{ if $i }} · {{ end }}<a href="{{ $m.URL }}">{{ $m.Name }}</a>{{ end }}</p>
+  {{- end }}
+</nav>
+{{- end }}

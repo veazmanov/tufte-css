@@ -1,0 +1,7 @@
+{{- /* A Gemini-style list of links, for the end of a section:
+   {{< links >}}
+   - [Beautiful Evidence](https://www.edwardtufte.com/book/beautiful-evidence/)
+   - [The ET Book font](https://github.com/edwardtufte/et-book)
+   {{< /links >}}
+   (With markup.goldmark.parser.attribute.block = true you can also write {.links} under a plain list.) */ -}}
+{{ .Inner | strings.TrimSpace | .Page.RenderString (dict "display" "block") | replaceRE `^<ul>` `<ul class="links">` | safeHTML }}

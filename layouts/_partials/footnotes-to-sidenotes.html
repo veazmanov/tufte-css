@@ -1,0 +1,22 @@
+{{- /* Turns Goldmark's footnotes into Tufte sidenotes: each [^note] reference becomes a numbered
+       sidenote at that point in the text, and the list of footnotes at the end is dropped.
+       A footnote of several paragraphs is joined into one, with line breaks. */ -}}
+{{- $c := . -}}
+{{- $notes := dict -}}
+{{- range findRESubmatch `(?s)<li id="fn:([^"]+)">(.*?)</li>` $c -}}
+  {{- $body := index . 2 -}}
+  {{- $body = replaceRE `(?s)(&#160;|\s)*<a href="#fnref[^"]*"[^>]*class="footnote-backref"[^>]*>.*?</a>` "" $body -}}
+  {{- $body = replaceRE `(?s)</p>\s*<p>` "<br><br>" $body -}}
+  {{- $body = replaceRE `</?p>` "" $body | strings.TrimSpace -}}
+  {{- $notes = merge $notes (dict (index . 1) $body) -}}
+{{- end -}}
+{{- if $notes -}}
+  {{- range findRESubmatch `<sup id="fnref\d*:([^"]+)"><a href="#fn:[^"]+" class="footnote-ref" role="doc-noteref">[^<]*</a></sup>` $c -}}
+    {{- $id := printf "sn-fn-%s" (index . 1 | anchorize) -}}
+    {{- $note := index $notes (index . 1) | default "" -}}
+    {{- $html := printf `<label for="%s" class="margin-toggle sidenote-number"></label><input type="checkbox" id="%s" class="margin-toggle"/><span class="sidenote">%s</span>` $id $id $note -}}
+    {{- $c = replace $c (index . 0) $html -}}
+  {{- end -}}
+  {{- $c = replaceRE `(?s)<div class="footnotes" role="doc-endnotes">.*</div>\s*$` "" $c -}}
+{{- end -}}
+{{- return $c -}}

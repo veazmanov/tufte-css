@@ -1,0 +1,8 @@
+{{- /* The page's content in Tufte's structure: a <section> per h2, Markdown footnotes as sidenotes. */ -}}
+{{- $c := string .Content -}}
+{{- if ne site.Params.tufte.footnotesAsSidenotes false -}}
+  {{- $c = partial "footnotes-to-sidenotes.html" $c -}}
+{{- end -}}
+{{- $c = replaceRE `<h2([ >])` `</section><section><h2$1` $c -}}
+{{- $c = printf "<section>%s</section>" $c | replaceRE `<section>\s*</section>` "" -}}
+{{ $c | safeHTML }}

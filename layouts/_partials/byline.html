@@ -1,0 +1,11 @@
+{{- /* Subtitle, author and date under the title, as in Tufte's handouts */ -}}
+{{- $parts := slice -}}
+{{- with .Params.subtitle }}{{ $parts = $parts | append . }}{{ end -}}
+{{- with .Params.author | default site.Params.author }}{{ if $.Params.showAuthor | default site.Params.tufte.showAuthor }}{{ $parts = $parts | append . }}{{ end }}{{ end -}}
+{{- if not .Date.IsZero -}}
+  {{- $fmt := site.Params.tufte.dateFormat | default ":date_long" -}}
+  {{- $parts = $parts | append (printf `<time datetime="%s">%s</time>` (.Date.Format "2006-01-02") (.Date | time.Format $fmt)) -}}
+{{- end -}}
+{{- with $parts }}
+  <p class="subtitle">{{ delimit . ", " | safeHTML }}</p>
+{{- end }}

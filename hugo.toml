@@ -1,0 +1,38 @@
+# This file makes the repository usable as a Hugo theme as well as a stylesheet.
+# The stylesheet, script and fonts are mounted straight from the repository root,
+# so a site gets exactly the version of tufte.css its theme checkout is at.
+
+[module]
+  [module.hugoVersion]
+    min = "0.158.0"
+
+  [[module.mounts]]
+    source = "layouts"
+    target = "layouts"
+  [[module.mounts]]
+    source = "archetypes"
+    target = "archetypes"
+  [[module.mounts]]
+    source = "tufte.css"
+    target = "static/tufte/tufte.css"
+  [[module.mounts]]
+    source = "tufte.min.css"
+    target = "static/tufte/tufte.min.css"
+  [[module.mounts]]
+    source = "theme.js"
+    target = "static/tufte/theme.js"
+  [[module.mounts]]
+    source = "et-book"
+    target = "static/tufte/et-book"
+
+[params.tufte]
+  # Where tufte.css, theme.js and the fonts come from:
+  #   ""  (the default) the copy in this theme, served from /tufte/
+  #   "https://tufte.vjbe.net/2/" the latest 2.x release instead
+  source = ""
+  # Share the light/dark choice across subdomains, e.g. "vjbe.net"
+  cookieDomain = ""
+  # Turn Markdown footnotes ([^1]) into sidenotes
+  footnotesAsSidenotes = true
+  # Show the print button beside the theme toggle
+  printButton = true

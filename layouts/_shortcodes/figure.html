@@ -1,0 +1,21 @@
+{{- /* A Tufte figure, replacing Hugo's built-in one.
+   {{< figure src="napoleon.png" alt="…" caption="Where it comes from, *Markdown* allowed" >}}
+   {{< figure src="napoleon.png" alt="…" caption="…" class="fullwidth" >}}
+   The caption goes in the margin; a full-width figure gets it underneath.
+   src may be a page resource, a file in static/, or an address. */ -}}
+{{- $src := .Get "src" -}}
+{{- with .Page.Resources.Get $src }}{{ $src = .RelPermalink }}{{ else }}{{ with resources.Get $src }}{{ $src = .RelPermalink }}{{ end }}{{ end -}}
+{{- $class := .Get "class" -}}
+{{- $full := in (split $class " ") "fullwidth" -}}
+{{- $id := printf "mn-fig-%d" .Ordinal -}}
+<figure{{ with $class }} class="{{ . }}"{{ end }}>
+  {{- with .Get "caption" }}{{ if not $full }}
+  <label for="{{ $id }}" class="margin-toggle">&#8853;</label><input type="checkbox" id="{{ $id }}" class="margin-toggle"/><span class="marginnote">{{ . | $.Page.RenderString }}</span>
+  {{- end }}{{ end }}
+  {{- $width := "" }}{{ with .Get "width" }}{{ $width = printf ` width="%s"` . }}{{ end }}
+  {{- $img := printf `<img src="%s" alt="%s"%s>` $src (.Get "alt" | default "") $width }}
+  {{ with .Get "link" }}<a href="{{ . }}" class="no-url">{{ $img | safeHTML }}</a>{{ else }}{{ $img | safeHTML }}{{ end }}
+  {{- with .Get "caption" }}{{ if $full }}
+  <figcaption>{{ . | $.Page.RenderString }}</figcaption>
+  {{- end }}{{ end }}
+</figure>

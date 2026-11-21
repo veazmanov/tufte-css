@@ -61,6 +61,46 @@ See the top of `theme.js` for a `<head>` snippet that stops the wrong theme flas
 Put your own styles in a separate stylesheet loaded after `tufte.css`, using the `--tufte-` variables
 rather than colours of your own; anything generic belongs in this repo instead.
 
+### As a Hugo theme
+
+The repository is also a Hugo theme (Hugo 0.158+). The theme serves this checkout's `tufte.css`,
+`theme.js` and fonts from `/tufte/`, so a site gets exactly the version its submodule is at.
+
+```bash
+git submodule add https://github.com/veazmanov/tufte-css.git themes/tufte-css
+```
+
+```toml
+# hugo.toml
+theme = "tufte-css"
+
+[params]
+  description = "Shown under the site title"
+  author = "Victor Elgersma-Azmanov"
+
+[params.tufte]
+  cookieDomain = "vjbe.net"        # share the light/dark choice across subdomains
+  # source = "https://tufte.vjbe.net/2/"   # load the released CSS instead of the theme's copy
+  # footnotesAsSidenotes = false
+  # printButton = false
+  # dateFormat = ":date_long"
+
+[markup.goldmark.parser.attribute]
+  block = true          # write {.links} under a list
+[markup.highlight]
+  noClasses = false     # no syntax colours
+```
+
+Every `h2` starts a new `<section>`, and Markdown footnotes (`[^1]`) become sidenotes. Shortcodes:
+`sidenote`, `marginnote`, `newthought`, `epigraph` (`author`, `source`), `figure` (`src`, `alt`,
+`caption`, `class="fullwidth"`, `link`) and `links` (a Markdown list, as a list of links).
+`subtitle` in a page's front matter goes under its title, with the date. Add your own `<head>`
+content in `layouts/_partials/head-extra.html`. The demo site:
+
+```bash
+hugo server -s exampleSite --themesDir ../.. -t tufte-css
+```
+
 ### Releasing
 
 1. Bump `version` in `package.json` (major for anything that changes how existing pages look).

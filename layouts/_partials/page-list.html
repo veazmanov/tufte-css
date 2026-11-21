@@ -1,0 +1,23 @@
+{{- /* A list of pages, newest first, grouped by year when they have dates */ -}}
+{{- $pages := . -}}
+{{- $dated := where $pages "Date.IsZero" false -}}
+{{- if and $pages (eq (len $dated) (len $pages)) -}}
+  {{- range $pages.GroupByDate "2006" }}
+<section>
+  <h2>{{ .Key }}</h2>
+  <ul class="links">
+    {{- range .Pages }}
+    <li><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>, <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format (site.Params.tufte.listDateFormat | default "2 January") }}</time></li>
+    {{- end }}
+  </ul>
+</section>
+  {{- end }}
+{{- else if $pages }}
+<section>
+  <ul class="links">
+    {{- range $pages }}
+    <li><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></li>
+    {{- end }}
+  </ul>
+</section>
+{{- end -}}

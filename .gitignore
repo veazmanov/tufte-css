@@ -2,3 +2,8 @@ node_modules/
 package-lock.json
 test-results/
 dist/
+public/
+resources/
+.hugo_build.lock
+exampleSite/public/
+exampleSite/resources/

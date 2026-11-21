@@ -1,0 +1,35 @@
+# The demo site. Run it from the repository root with:
+#   hugo server -s exampleSite --themesDir ../.. -t tufte-css
+baseURL = "https://words.vjbe.net/"
+title = "words"
+locale = "en-GB"
+
+[params]
+  description = "Essays and notes by Victor Elgersma-Azmanov"
+  author = "Victor Elgersma-Azmanov"
+  mainSections = ["posts"]
+
+[params.tufte]
+  cookieDomain = "vjbe.net"
+
+[[menus.main]]
+  name = "vjbe.net"
+  url = "https://vjbe.net/"
+  weight = 1
+[[menus.main]]
+  name = "RSS"
+  url = "/index.xml"
+  weight = 2
+
+[markup.goldmark.parser.attribute]
+  block = true    # lets you write {.links} under a list
+[markup.highlight]
+  noClasses = false   # no syntax colours: code stays in the text colour
+
+# The demo pictures come from the repository's img/ folder
+[[module.mounts]]
+  source = "static"
+  target = "static"
+[[module.mounts]]
+  source = "../img"
+  target = "static/img"

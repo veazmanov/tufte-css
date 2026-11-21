@@ -1,0 +1,13 @@
+{{ define "main" }}
+<article>
+  <h1>{{ site.Title }}</h1>
+  {{- with site.Params.description }}
+  <p class="subtitle">{{ . }}</p>
+  {{- end }}
+  {{- with .Content }}
+  {{ partial "content.html" $ }}
+  {{- end }}
+  {{- $sections := site.Params.mainSections | default (slice "posts") }}
+  {{- partial "page-list.html" (where site.RegularPages "Section" "in" $sections) }}
+</article>
+{{ end }}

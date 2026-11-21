@@ -1,0 +1,12 @@
+name = "Tufte CSS (vjbe)"
+license = "MIT"
+licenselink = "https://github.com/veazmanov/tufte-css/blob/gh-pages/LICENSE"
+description = "Hugo theme for the vjbe.net fork of Tufte CSS: sidenotes, warm paper palette with dark mode, print as a first-class citizen, Gemini-style links."
+homepage = "https://tufte.vjbe.net/"
+tags = ["blog", "minimal", "typography", "tufte", "print", "dark mode"]
+features = ["sidenotes", "margin notes", "footnotes as sidenotes", "dark mode", "print styles"]
+min_version = "0.158.0"
+
+[author]
+  name = "Victor Elgersma-Azmanov"
+  homepage = "https://vjbe.net"

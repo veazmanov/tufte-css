@@ -1,0 +1,5 @@
+{{- $base := partial "tufte-base.html" . -}}
+{{- $p := site.Params.tufte -}}
+<script src="{{ $base }}theme.js" data-key="tufte-theme"
+  {{- with $p.cookieDomain }} data-cookie-domain="{{ . }}"{{ end }}
+  {{- if eq $p.printButton false }} data-print-button="false"{{ end }}></script>

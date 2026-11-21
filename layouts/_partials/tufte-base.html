@@ -1,0 +1,7 @@
+{{- /* Where tufte.css, theme.js and the fonts are served from, with a trailing slash */ -}}
+{{- $src := site.Params.tufte.source | default "" -}}
+{{- if $src -}}
+  {{- return (strings.TrimSuffix "/" $src | printf "%s/") -}}
+{{- else -}}
+  {{- return ("tufte/" | relURL) -}}
+{{- end -}}

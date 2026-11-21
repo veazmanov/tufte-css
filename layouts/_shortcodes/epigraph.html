@@ -1,0 +1,13 @@
+{{- /* An epigraph at the head of a page or section:
+   {{< epigraph author="Richard P. Feynman" source="What Do You Care What Other People Think?" >}}
+   For a successful technology, reality must take precedence over public relations.
+   {{< /epigraph >}}
+   Several in a row make one block of epigraphs. */ -}}
+<div class="epigraph">
+  <blockquote>
+    {{ .Inner | strings.TrimSpace | .Page.RenderString (dict "display" "block") }}
+    {{- if or (.Get "author") (.Get "source") }}
+    <footer>{{ with .Get "author" }}{{ . | $.Page.RenderString }}{{ end }}{{ if and (.Get "author") (.Get "source") }}, {{ end }}{{ with .Get "source" }}<cite>{{ . | $.Page.RenderString }}</cite>{{ end }}</footer>
+    {{- end }}
+  </blockquote>
+</div>
