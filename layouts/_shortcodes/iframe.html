@@ -1,0 +1,6 @@
+{{- /* An embedded page or video that scales with the column, e.g. YouTube:
+   {{< iframe src="https://www.youtube.com/embed/YslQ2625TR4" title="…" >}}
+   On paper theme.js prints its address instead. */ -}}
+<figure class="iframe-wrapper">
+  <iframe width="853" height="480" src="{{ .Get "src" }}"{{ with .Get "title" }} title="{{ . }}"{{ end }} frameborder="0" allowfullscreen loading="lazy"></iframe>
+</figure>

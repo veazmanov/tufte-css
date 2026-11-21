@@ -1,0 +1,7 @@
+{{- /* One epigraph quote, from the epigraph shortcode's own author/source */ -}}
+<blockquote>
+  {{ .Inner | strings.TrimSpace | .Page.RenderString (dict "display" "block") }}
+  {{- if or (.Get "author") (.Get "source") }}
+  <footer>{{ with .Get "author" }}{{ . | $.Page.RenderString }}{{ end }}{{ if and (.Get "author") (.Get "source") }}, {{ end }}{{ with .Get "source" }}<cite>{{ . | $.Page.RenderString }}</cite>{{ end }}</footer>
+  {{- end }}
+</blockquote>

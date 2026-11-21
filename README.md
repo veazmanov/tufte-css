@@ -92,8 +92,10 @@ theme = "tufte-css"
 ```
 
 Every `h2` starts a new `<section>`, and Markdown footnotes (`[^1]`) become sidenotes. Shortcodes:
-`sidenote`, `marginnote`, `newthought`, `epigraph` (`author`, `source`), `figure` (`src`, `alt`,
-`caption`, `class="fullwidth"`, `link`) and `links` (a Markdown list, as a list of links).
+`sidenote`, `marginnote`, `newthought`, `epigraph` (`author`, `source`; or `quote`s inside it), `quote`
+(`author`, `source` or `footer`, `cite`), `figure` (`src`, `alt`, `caption`, `class="fullwidth"`, `link`),
+`iframe` (`src`) and `links` (a Markdown list, as a list of links). The example site's post is this
+repository's demo page in Markdown.
 `subtitle` in a page's front matter goes under its title, with the date. Add your own `<head>`
 content in `layouts/_partials/head-extra.html`. The demo site:
 

@@ -1,0 +1,21 @@
+{{- /* A block quote with its source in a footer:
+   {{< quote footer="Edward Tufte, *Beautiful Evidence*" cite="https://…" >}}
+   The quoted text, in Markdown.
+   {{< /quote >}}
+   Or author= and source= (set in italics) instead of footer=.
+   Inside an epigraph shortcode, several quotes make one block of epigraphs. */ -}}
+{{- $footer := "" -}}
+{{- with .Get "footer" -}}
+  {{- $footer = . | $.Page.RenderString -}}
+{{- else -}}
+  {{- $a := .Get "author" -}}{{- $s := .Get "source" -}}
+  {{- with $a }}{{ $footer = . | $.Page.RenderString }}{{ end -}}
+  {{- if and $a $s }}{{ $footer = printf "%s, " $footer }}{{ end -}}
+  {{- with $s }}{{ $footer = printf "%s<cite>%s</cite>" $footer (. | $.Page.RenderString) }}{{ end -}}
+{{- end -}}
+<blockquote{{ with .Get "cite" }} cite="{{ . }}"{{ end }}>
+  {{ .Inner | strings.TrimSpace | .Page.RenderString (dict "display" "block") }}
+  {{- with $footer }}
+  <footer>{{ . | safeHTML }}</footer>
+  {{- end }}
+</blockquote>
